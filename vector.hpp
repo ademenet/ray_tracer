@@ -61,14 +61,29 @@ inline vector_3d operator+(const vector_3d &v1, const vector_3d &v2) {
 	return vector_3d(v1.e[0]+v2.e[0], v1.e[1]+v2.e[1], v1.e[2]+v2.e[2]);
 }
 
-inline vector_3d operator-(const vector_3d &v1, const vector_3d &v2) {	
+inline vector_3d operator-(const vector_3d &v1, const vector_3d &v2) {
 	return vector_3d(v1.e[0]-v2.e[0], v1.e[1]-v2.e[1], v1.e[2]-v2.e[2]);
 }
 
-inline vector_3d operator*(const vector_3d &v1. const vector_3d &v2) {
+inline vector_3d operator*(const vector_3d &v1, const vector_3d &v2) {
 	return vector_3d(v1.e[0]*v2.e[0], v1.e[1]*v2.e[1], v1.e[2]*v2.e[2]);
 }
 
-inline vector_3d operator/(const vector_3d &v1. const vector_3d &v2) {
+inline vector_3d operator/(const vector_3d &v1, const vector_3d &v2) {
 	return vector_3d(v1.e[0]/v2.e[0], v1.e[1]/v2.e[1], v1.e[2]/v2.e[2]);
 }
+
+inline vector_3d operator*(float t, const vector_3d &v) {
+	return vector_3d(t*v.e[0], t*v.e[1], t*v.e[2]);
+}
+
+inline vector_3d operator/(vector_3d &v, float t) {
+	return vector_3d(v.e[0]/t, v.e[1]/t, v.e[2]/t);
+}
+
+inline vector_3d operator*(const vector_3d &v, float t) {
+	return vector_3d(t*v.e[0], t*v.e[1], t*v.e[2]);
+}
+ inline float dot(const vector_3d &v1, const vector_3d &v2) {
+	 // TODO
+ }
