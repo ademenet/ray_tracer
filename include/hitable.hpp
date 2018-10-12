@@ -1,7 +1,7 @@
 #ifndef HITABLE_HPP
 # define HITABLE_HPP
 
-# include "ray.h"
+# include "ray.hpp"
 
 struct hit_record {
 	float		t;
