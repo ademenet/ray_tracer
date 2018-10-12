@@ -2,7 +2,7 @@
 #include "vector.hpp"
 #include "ray.hpp"
 
-bool hit_sphere(const vector_3d &center, float radius, const ray &r) {
+float hit_sphere(const vector_3d &center, float radius, const ray &r) {
 	// Here we calculate the discriminant to see of the ray intercept the sphere
 	// of center `center` and radius `radius`. It's not more than what you
 	// learned in high school discriminant = b^2 - 4 * a * c.
@@ -19,15 +19,22 @@ bool hit_sphere(const vector_3d &center, float radius, const ray &r) {
 	float b = 2.0 * dot(oc, r.direction()); // 2.0 * dot(B,A-C)
 	float c = dot(oc, oc) - radius*radius; // dot(A-C,A-C)-R*R
 	float discriminant = b*b - 4 * a * c;
-	return (discriminant > 0);
+	if (discriminant < 0)
+		return -1.0;
+	else
+		return (-b - sqrt(discriminant)) / (2.0*a);
 }
 
 vector_3d color(const ray& r) {
 	// Liner blend, linear interpolation, lerp
-	if (hit_sphere(vector_3d(0, 0, -1), 0.5, r))
-		return vector_3d(1, 0, 0);
+	float t = hit_sphere(vector_3d(0, 0, -1), 0.5, r);
+
+	if (t > 0.0) {
+		vector_3d N = unit_vector(r.point_at_parameter(t) - vector_3d(0, 0, -1));
+		return 0.5 * vector_3d(N.x()+1, N.y()+1, N.z()+1);
+	}
 	vector_3d unit_direction = unit_vector(r.direction());
-	float t = 0.5 * (unit_direction.y() + 1.0);
+	t = 0.5 * (unit_direction.y() + 1.0);
 	return (1.0 - t) * vector_3d(1.0, 1.0, 1.0) + t * vector_3d(0.5, 0.7, 1.0);
 }
 
