@@ -1,6 +1,9 @@
-#include <math.h>
-#include <stdlib.h>
-#include <iostream>
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
+
+# include <math.h>
+# include <stdlib.h>
+# include <iostream>
 
 class vector_3d {
 	public:
@@ -38,7 +41,7 @@ class vector_3d {
 		inline void make_unit_vector();
 
 		float e[3];
-}
+};
 
 inline std::istream& operator>>(std::istream &is, vector_3d &t) {
 	is >> t.e[0] >> t.e[1] >> t.e[2];
@@ -84,6 +87,63 @@ inline vector_3d operator/(vector_3d &v, float t) {
 inline vector_3d operator*(const vector_3d &v, float t) {
 	return vector_3d(t*v.e[0], t*v.e[1], t*v.e[2]);
 }
- inline float dot(const vector_3d &v1, const vector_3d &v2) {
-	 // TODO
- }
+
+inline float dot(const vector_3d &v1, const vector_3d &v2) {
+	return v1.e[0]*v2.e[0] + v1.e[1]*v2.e[1] + v1.e[2]*v2.e[2];
+}
+
+inline vector_3d cross(const vector_3d &v1, const vector_3d &v2) {
+	return vector_3d((v1.e[1]*v2.e[2] - v1.e[2]*v2.e[1]),
+					 (v1.e[2]*v2.e[0] - v1.e[0]*v2.e[2]),
+					 (v1.e[0]*v2.e[1] - v1.e[1]*v2.e[0]));
+}
+
+inline vector_3d& vector_3d::operator+=(const vector_3d &v) {
+	e[0] += v.e[0];
+	e[1] += v.e[1];
+	e[2] += v.e[2];
+	return *this;
+}
+
+inline vector_3d& vector_3d::operator*=(const vector_3d &v) {
+	e[0] *= v.e[0];
+	e[1] *= v.e[1];
+	e[2] *= v.e[2];
+	return *this;
+}
+
+inline vector_3d& vector_3d::operator/=(const vector_3d &v) {
+	e[0] /= v.e[0];
+	e[1] /= v.e[1];
+	e[2] /= v.e[2];
+	return *this;
+}
+
+inline vector_3d& vector_3d::operator-=(const vector_3d &v) {
+	e[0] -= v.e[0];
+	e[1] -= v.e[1];
+	e[2] -= v.e[2];
+	return *this;
+}
+
+inline vector_3d& vector_3d::operator*=(const float t) {
+	e[0] *= t;
+	e[1] *= t;
+	e[2] *= t;
+	return *this;
+}
+
+inline vector_3d& vector_3d::operator/=(const float t) {
+	float k = 1.0 / t;
+
+	e[0] *= k;
+	e[1] *= k;
+	e[2] *= k;
+	return *this;
+}
+
+inline vector_3d unit_vector(vector_3d v) {
+	return v / v.length();
+}
+
+#endif
