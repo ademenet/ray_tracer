@@ -11,23 +11,25 @@ vector_3d color(const ray& r) {
 
 int main()
 {
-	int		nx = 200;
-	int		ny = 100;
+	int			nx = 200;
+	int			ny = 100;
+	float		u, v;
+	int			ir, ig, ib;
+	vector_3d	lower_left_corner(-2.0, -1.0, -1.0);
+	vector_3d	horizontal(4.0, 0.0, 0.0);
+	vector_3d	vertical(0.0, 2.0, 0.0);
+	vector_3d	origin(0.0, 0.0, 0.0);
 
 	std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-	vector_3d lower_left_corner(-2.0, -1.0, -1.0);
-	vector_3d horizontal(4.0, 0.0, 0.0);
-	vector_3d vertical(0.0, 2.0, 0.0);
-	vector_3d origin(0.0, 0.0, 0.0);
 	for (int j = ny-1; j >= 0; j--) {
 		for (int i = 0; i < nx; i++) {
-			float u = float(i) / float(nx);
-			float v = float(j) / float(ny);
+			u = float(i) / float(nx);
+			v = float(j) / float(ny);
 			ray r(origin, lower_left_corner + u*horizontal + v*vertical);
 			vector_3d col = color(r);
-			int ir = int(255.99 * col[0]);
-			int ig = int(255.99 * col[1]);
-			int ib = int(255.99 * col[2]);
+			ir = int(255.99 * col[0]);
+			ig = int(255.99 * col[1]);
+			ib = int(255.99 * col[2]);
 			std::cout << ir << " " << ig << " " << ib << "\n";
 		}
 	}
