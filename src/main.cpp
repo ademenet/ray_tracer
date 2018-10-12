@@ -1,6 +1,6 @@
 #include <iostream>
 #include "sphere.hpp"
-#include "hitable_list.hpp"
+#include "hitablelist.hpp"
 #include "float.h"
 
 vector_3d color(const ray& r, hitable *world) {
@@ -37,7 +37,6 @@ int main()
 			u = float(i) / float(nx);
 			v = float(j) / float(ny);
 			ray r(origin, lower_left_corner + u*horizontal + v*vertical);
-			vector_3d p = r.point_at_parameter(2.0);
 			vector_3d col = color(r, world);
 			ir = int(255.99 * col[0]);
 			ig = int(255.99 * col[1]);
